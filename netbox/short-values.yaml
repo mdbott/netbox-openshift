@@ -1,0 +1,291 @@
+
+replicaCount: 1
+image:
+  repository: netboxcommunity/netbox
+  pullPolicy: IfNotPresent
+  tag: ""
+superuser:
+  name: admin
+  email: admin@example.com
+  password: admin
+  apiToken: 0123456789abcdef0123456789abcdef01234567
+skipStartupScripts: true
+allowedHosts:
+  - '*'
+admins: []
+allowTokenRetrieval: false
+authPasswordValidators: []
+allowedUrlSchemes: [file, ftp, ftps, http, https, irc, mailto, sftp, ssh, tel,
+                    telnet, tftp, vnc, xmpp]
+banner:
+  top: ''
+  bottom: ''
+  login: ''
+basePath: ''
+changelogRetention: 90
+customValidators: {}
+defaultUserPreferences: {}
+cors:
+  originAllowAll: false
+  originWhitelist: []
+  originRegexWhitelist: []
+csrf:
+  cookieName: csrftoken
+  trustedOrigins: []
+defaultLanguage: en-us
+debug: false
+dbWaitDebug: false
+email:
+  server: localhost
+  port: 25
+  username: ''
+  password: ''
+  useSSL: false
+  useTLS: false
+  sslCertFile: ''
+  sslKeyFile: ''
+  from: ''
+enforceGlobalUnique: false
+exemptViewPermissions: []
+fieldChoices: {}
+graphQlEnabled: true
+httpProxies: null
+internalIPs: ['127.0.0.1', '::1']
+jobResultRetention: 90
+logging: {}
+loginPersistence: false
+loginRequired: false
+logoutRedirectUrl: home
+maintenanceMode: false
+mapsUrl: 'https://maps.google.com/?q='
+maxPageSize: 1000
+storageConfig: {}
+metricsEnabled: false
+napalm:
+  username: ''
+  password: ''
+  timeout: 30
+  args: {}
+paginateCount: 50
+plugins: []
+pluginsConfig: {}
+powerFeedDefaultAmperage: 15
+powerFeedMaxUtilisation: 80
+powerFeedDefaultVoltage: 120
+preferIPv4: false
+rackElevationDefaultUnitHeight: 22
+rackElevationDefaultUnitWidth: 220
+remoteAuth:
+  enabled: false
+  backend: netbox.authentication.RemoteUserBackend
+  header: HTTP_REMOTE_USER
+  autoCreateUser: true
+  defaultGroups: []
+  defaultPermissions: {}
+  groupSyncEnabled: false
+  groupHeader: HTTP_REMOTE_USER_GROUP
+  superuserGroups: []
+  superusers: []
+  staffGroups: []
+  staffUsers: []
+  groupSeparator: '|'
+releaseCheck:
+  url: null
+rqDefaultTimeout: 300  # 5 mins
+sessionCookieName: sessionid
+enableLocalization: false
+timeZone: UTC
+dateFormat: 'N j, Y'
+shortDateFormat: 'Y-m-d'
+timeFormat: 'g:i a'
+shortTimeFormat: 'H:i:s'
+dateTimeFormat: 'N j, Y g:i a'
+shortDateTimeFormat: 'Y-m-d H:i'
+extraConfig: []
+secretKey: ""
+existingSecret: ""
+postgresql:
+  enabled: false
+  auth:
+    username: netbox
+    database: netbox
+externalDatabase:
+  host: netbox-db-cluster-rw
+  port: 5432
+  database: netbox
+  existingSecretName: "netbox-db-secret"
+  existingSecretKey: password
+  sslMode: prefer
+  connMaxAge: 300
+  disableServerSideCursors: false
+  targetSessionAttrs: read-write
+redis:
+  enabled: true
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+serviceAccount:
+  create: true
+  annotations: {}
+  name: ""
+
+persistence:
+  enabled: true
+  existingClaim: ""
+  subPath: ""
+  storageClass: ""
+  accessMode: ReadWriteOnce
+  size: 1Gi
+reportsPersistence:
+  enabled: false
+  existingClaim: ""
+  subPath: ""
+  storageClass: ""
+  accessMode: ReadWriteOnce
+  size: 1Gi
+commonLabels: {}
+commonAnnotations: {}
+podAnnotations: {}
+podLabels: {}
+podSecurityContext:
+  fsGroup: 1000
+  runAsNonRoot: true
+securityContext:
+  capabilities:
+    drop:
+      - ALL
+  readOnlyRootFilesystem: true
+  runAsNonRoot: true
+  runAsUser: 1000
+  runAsGroup: 1000
+service:
+  annotations: {}
+  type: ClusterIP
+  port: 80
+  nodePort: ""
+  clusterIP: ""
+  clusterIPs: []
+  externalIPs: []
+  externalTrafficPolicy: ""
+  ipFamilyPolicy: ""
+  loadBalancerIP: ""
+  loadBalancerSourceRanges: []
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+  hosts:
+    - host: chart-example.local
+      paths:
+        - /
+  tls: []
+resources: {}
+topologySpreadConstraints: []
+readinessProbe:
+  enabled: true
+  initialDelaySeconds: 0
+  timeoutSeconds: 1
+  periodSeconds: 10
+  successThreshold: 1
+init:
+  image:
+    repository: busybox
+    tag: 1.32.1
+    pullPolicy: IfNotPresent
+  resources: {}
+  securityContext:
+    capabilities:
+      drop:
+        - ALL
+    readOnlyRootFilesystem: true
+    runAsNonRoot: true
+    runAsUser: 1000
+test:
+  image:
+    repository: busybox
+    tag: 1.32.1
+    pullPolicy: IfNotPresent
+  resources: {}
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+nodeSelector: {}
+tolerations: []
+hostAliases: []
+updateStrategy: {}
+affinity: {}
+extraEnvs: []
+extraVolumeMounts: []
+extraVolumes: []
+extraContainers: []
+extraInitContainers: []
+serviceMonitor:
+  enabled: false
+  additionalLabels: {}
+  interval: 1m
+  scrapeTimeout: 10s
+housekeeping:
+  enabled: true
+  concurrencyPolicy: Forbid
+  failedJobsHistoryLimit: 5
+  restartPolicy: OnFailure
+  schedule: '0 0 * * *'
+  successfulJobsHistoryLimit: 5
+  suspend: false
+  podAnnotations: {}
+  podLabels: {}
+  podSecurityContext:
+    fsGroup: 1000
+    runAsNonRoot: true
+  securityContext:
+    capabilities:
+      drop:
+        - ALL
+    readOnlyRootFilesystem: true
+    runAsNonRoot: true
+    runAsUser: 1000
+    runAsGroup: 1000
+  resources: {}
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+  extraEnvs: []
+  extraVolumeMounts: []
+  extraVolumes: []
+  extraContainers: []
+  extraInitContainers: []
+worker:
+  enabled: true
+  replicaCount: 1
+  podAnnotations: {}
+  podLabels: {}
+  podSecurityContext:
+    fsGroup: 1000
+    runAsNonRoot: true
+  securityContext:
+    capabilities:
+      drop:
+        - ALL
+    readOnlyRootFilesystem: true
+    runAsNonRoot: true
+    runAsUser: 1000
+    runAsGroup: 1000
+  resources: {}
+  autoscaling:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 100
+    targetCPUUtilizationPercentage: 80
+  nodeSelector: {}
+  tolerations: []
+  hostAliases: []
+  updateStrategy: {}
+  affinity: {}
+  extraEnvs: []
+  extraVolumeMounts: []
+  extraVolumes: []
+  extraContainers: []
+  extraInitContainers: []

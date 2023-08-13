@@ -1,0 +1,104 @@
+
+Deploying Netbox in Openshift 4.13/ Kubernetes
+
+
+
+
+
+Create the Netbox namespace
+```
+oc create ns netbox
+```
+
+
+Install HA Postgresql Operator fro EDB
+
+```
+helm repo add cnpg https://cloudnative-pg.github.io/charts
+helm upgrade --install cnpg   --namespace cnpg-system   --create-namespace   cnpg/cloudnative-pg
+oc adm policy add-scc-to-user privileged system:serviceaccount:cnpg-system:cnpg-cloudnative-pg
+```
+
+
+Setup Database superuser secret
+
+
+```
+oc apply -f netbox_superuser_db_secret.yaml -n netbox
+```
+
+
+#convert username
+#echo "netbox" | base64
+#bmV0Ym94Cg==
+
+#convert password
+#echo "cGFzc3dvcmQ=" | base64
+#Y0dGemMzZHZjbVE9Cg==
+
+Setup netbox database password secret
+
+
+```
+oc apply -f netbox_db_secret.yaml -n netbox
+```
+
+
+Deploy Netbox Database Cluster
+
+```
+oc apply -f netbox-db-cluster.yml -n netbox
+```
+
+Install the Netbox Helm Chart Repo
+
+helm repo add bootc https://charts.boo.tc
+
+
+Deploy Netbox using the Helm Chart 
+
+Add any updates as required to the values.yaml
+
+```
+vim values.yaml
+```
+
+Then deploy the helm chart
+
+```
+helm install --namespace=<netbox-namespace> netbox bootc/netbox --values short-values.yaml
+oc adm policy add-scc-to-user privileged system:serviceaccount:<netbox-namespace>:netbox
+oc adm policy add-scc-to-user privileged system:serviceaccount:<netbox-namespace>:netbox-redis
+```
+and expose the route
+```
+oc expose service netbox --namespace netbox2  --hostname='netbox2.example.com'
+```
+or use tls encryption
+
+```
+oc create route passthrough --namespace <netbox-namespace> --service=netbox --hostname='netbox2.example.com'
+```
+
+If updates are required to the values.yaml run
+
+```
+helm upgrade --namespace=netbox netbox bootc/netbox --values values.yaml
+```
+
+
+
+
+Upgrading the Helm charts
+
+Update the repos
+
+```
+helm repo update
+```
+
+Then Upgrade the running charts
+
+```
+helm upgrade --install cnpg   --namespace cnpg-system   --create-namespace   cnpg/cloudnative-pg
+```

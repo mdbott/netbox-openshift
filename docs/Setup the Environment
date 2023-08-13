@@ -1,0 +1,63 @@
+
+
+Install Krew
+https://krew.sigs.k8s.io/docs/user-guide/setup/install/
+
+
+```
+
+mkdir krew
+cd krew
+(   set -x; cd "$(mktemp -d)" &&   OS="$(uname | tr '[:upper:]' '[:lower:]')" &&   ARCH="$(uname -m | sed -e 's/x86_64/amd64/' -e 's/\(arm\)\(64\)\?.*/\1\2/' -e 's/aarch64$/arm64/')" &&   KREW="krew-${OS}_${ARCH}" &&   curl -fsSLO "https://github.com/kubernetes-sigs/krew/releases/latest/download/${KREW}.tar.gz" &&   tar zxvf "${KREW}.tar.gz" &&   ./"${KREW}" install krew; )
+
+```
+
+Update the .bashrc
+and add
+
+export OC_EDITOR="vim"
+export KUBE_EDITOR="vim"
+export KUBECONFIG=/root/ocp4/auth/kubeconfig
+export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+
+
+
+Install the cnpg plugin
+
+
+```
+kubectl krew install cnpg
+```
+
+
+Install the Lineage plugin
+
+
+```
+kubectl krew install lineage
+```
+
+
+Install Resource Capacity plugin
+
+```
+kubectl krew install resource-capacity
+```
+
+
+
+kubectl resource-capacity --pods --util --sort cpu.util
+
+
+Upgrade the krew plugins
+
+
+```
+kubectl krew upgrade
+```
+
+Manually remove a stuck keypair from etcd in openshift
+
+```
+oc rsh -n openshift-etcd -c etcdctl etcd-master01.ocp4.example.com
+```

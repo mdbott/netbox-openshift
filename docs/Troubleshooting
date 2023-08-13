@@ -1,0 +1,35 @@
+To test the postgresql database accessability
+
+
+Install the psql utility
+```
+dnf install Postgresql
+```
+
+in one terminal run
+
+```
+oc get pods -n netbox
+
+kubectl port-forward pod/netbox-db-cluster-1 5432:5432 -n netbox
+```
+
+and in a different terminal run
+```
+psql --host localhost --username netbox netbox
+```
+
+
+
+Helm Status
+
+Show the helm deployments across all namespaces
+
+```
+helm list -A
+```
+
+
+Get Events
+
+

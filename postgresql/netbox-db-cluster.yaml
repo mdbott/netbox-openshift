@@ -1,0 +1,34 @@
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: netbox-db-cluster
+spec:
+  description: "Netbox Database cluster"
+  imageName: ghcr.io/cloudnative-pg/postgresql:15.3
+  instances: 3
+  startDelay: 300
+  stopDelay: 300
+  primaryUpdateStrategy: unsupervised
+
+  postgresql:
+    parameters:
+      shared_buffers: 256MB
+      pg_stat_statements.max: '10000'
+      pg_stat_statements.track: all
+      auto_explain.log_min_duration: '10s'
+    pg_hba:
+      - host all all 10.244.0.0/16 md5
+
+  bootstrap:
+    initdb:
+      database: netbox
+      owner: netbox
+      secret:
+        name: netbox-db-secret
+
+  superuserSecret:
+    name: netbox-superuser-db-secret
+
+  storage:
+    size: 10Gi
